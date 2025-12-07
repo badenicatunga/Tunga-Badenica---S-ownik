@@ -1,9 +1,12 @@
 let slownik = {};
 
-fetch("./slownik.json") // <- Upewnij się, że jest "./"
+fetch("./slownik.json")
   .then(res => res.json())
-  .then(data => slownik = data)
-  .catch(err => console.error("Błąd ładowania słownika", err));
+  .then(data => {
+    slownik = data;
+    console.log("Słownik załadowany:", slownik); // DEBUG
+  })
+  .catch(err => console.error("Błąd ładowania słownika:", err));
 
 function szukaj() {
   const slowo = document.getElementById("slowo").value.toLowerCase().trim();
@@ -13,6 +16,8 @@ function szukaj() {
     wynikDiv.innerText = "Wpisz słowo.";
     return;
   }
+
+  console.log("Szukane słowo:", slowo); // DEBUG
 
   if (slownik[slowo]) {
     wynikDiv.innerHTML = `<strong>${slowo}</strong>: ${slownik[slowo]}`;
